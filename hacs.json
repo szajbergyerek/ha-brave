@@ -1,0 +1,6 @@
+{
+  "name": "Brave Search",
+  "render_readme": true,
+  "domains": ["brave_search"],
+  "homeassistant": "2025.2.0"
+}

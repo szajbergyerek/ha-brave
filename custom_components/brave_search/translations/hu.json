@@ -1,0 +1,20 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Brave Search",
+        "description": "Add meg a Brave Search API kulcsodat. Beállítás előtt egy teszthívással ellenőrizzük az érvényességét.",
+        "data": {
+          "api_key": "API kulcs"
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "A Brave Search elutasította az API kulcsot.",
+      "cannot_connect": "Nem sikerült csatlakozni a Brave Search API-hoz."
+    },
+    "abort": {
+      "single_instance_allowed": "A Brave Search már be van állítva."
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "domain": "brave_search",
+  "name": "Brave Search",
+  "codeowners": ["@szajbergyerek"],
+  "config_flow": true,
+  "documentation": "https://github.com/szajbergyerek/ha-brave",
+  "issue_tracker": "https://github.com/szajbergyerek/ha-brave/issues",
+  "iot_class": "cloud_polling",
+  "integration_type": "service",
+  "requirements": [],
+  "single_config_entry": true,
+  "version": "1.0.0",
+  "homeassistant": "2025.2.0"
+}

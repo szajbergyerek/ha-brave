@@ -1,0 +1,20 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Brave Search",
+        "description": "Enter your Brave Search API key. It will be validated with a test request before the integration is set up.",
+        "data": {
+          "api_key": "API key"
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "The API key was rejected by Brave Search.",
+      "cannot_connect": "Could not connect to the Brave Search API."
+    },
+    "abort": {
+      "single_instance_allowed": "Brave Search is already configured."
+    }
+  }
+}
