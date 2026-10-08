@@ -24,11 +24,16 @@ from .const import (
 _LOGGER = logging.getLogger(__name__)
 
 
-async def _async_search_brave(
+async def async_search_brave(
     hass: HomeAssistant, api_key: str, query: str, count: int
 ) -> list[dict[str, str]]:
     """
     Call the Brave Web Search API and extract the top results.
+
+    Shared by the `brave_search` llm.Tool (for HA's own Assist LLM API) and
+    the plain `brave_search.search` service (for everything else: scripts,
+    automations, and external callers like another assistant's generic
+    "call any Home Assistant service" tool).
 
     param hass: The Home Assistant instance, used to get the shared aiohttp session.
     param api_key: The Brave Search API key stored for this integration.
@@ -64,20 +69,23 @@ async def _async_search_brave(
     ]
 
 
+SEARCH_PARAMETERS_SCHEMA = vol.Schema(
+    {
+        vol.Required("query"): str,
+        vol.Optional("count", default=DEFAULT_RESULT_COUNT): vol.All(
+            int, vol.Range(min=MIN_RESULT_COUNT, max=MAX_RESULT_COUNT)
+        ),
+    }
+)
+
+
 class BraveSearchTool(llm.Tool):
     """An llm Tool that searches the public internet using the Brave Search API."""
 
     name = TOOL_NAME
     description = TOOL_DESCRIPTION
     integration = DOMAIN
-    parameters = vol.Schema(
-        {
-            vol.Required("query"): str,
-            vol.Optional("count", default=DEFAULT_RESULT_COUNT): vol.All(
-                int, vol.Range(min=MIN_RESULT_COUNT, max=MAX_RESULT_COUNT)
-            ),
-        }
-    )
+    parameters = SEARCH_PARAMETERS_SCHEMA
 
     async def async_call(
         self, hass: HomeAssistant, tool_input: ToolInput, llm_context: LLMContext
@@ -99,7 +107,7 @@ class BraveSearchTool(llm.Tool):
         count = tool_input.tool_args.get("count", DEFAULT_RESULT_COUNT)
 
         try:
-            results = await _async_search_brave(hass, api_keys[0], query, count)
+            results = await async_search_brave(hass, api_keys[0], query, count)
         except (aiohttp.ClientError, asyncio.TimeoutError, RuntimeError) as error:
             _LOGGER.warning("Brave Search tool call failed: %s", error)
             return {"error": f"Web search failed: {error}"}

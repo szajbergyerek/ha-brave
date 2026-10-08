@@ -8,6 +8,8 @@ API_PROMPT = (
     "current information that you do not already know."
 )
 
+SERVICE_SEARCH = "search"
+
 TOOL_NAME = "brave_search"
 TOOL_DESCRIPTION = (
     "Search the public internet for current information using the Brave Search "

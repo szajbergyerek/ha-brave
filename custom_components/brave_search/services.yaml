@@ -1,0 +1,21 @@
+search:
+  name: Search
+  description: Search the public internet via Brave Search and return the results.
+  fields:
+    query:
+      name: Query
+      description: The search query text.
+      required: true
+      example: "hány fok van most Budapesten"
+      selector:
+        text:
+    count:
+      name: Result count
+      description: How many results to return (1-10). Defaults to 5.
+      required: false
+      example: 5
+      selector:
+        number:
+          min: 1
+          max: 10
+          mode: box
